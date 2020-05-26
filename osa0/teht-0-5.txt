@@ -1,0 +1,19 @@
+title tehtävä 0.5
+
+note over selain:    enimmäkseen samat asiat kuin esimerkissä
+selain -> palvelin:  HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+palvelin --> selain: HTML
+selain -> palvelin:  HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin --> selain: CSS
+selain -> palvelin:  HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+palvelin --> selain: JS
+note over selain:    selain suorittaa javascript-koodin, \nhakee data.json -tiedoston ...
+
+selain -> palvelin:  HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+palvelin --> selain: JSON
+
+note over selain:    ... ja liittää sen sisällöt spa.html -sivulle
+
+note over selain:    Firefox Developer Edition:ssä näkyy myös pyyntö favicon.ico:lle
+selain -> palvelin:  HTTP GET https://fullstack-exampleapp.herokuapp.com/favicon.ico
+palvelin --> selain: HTTP 404
