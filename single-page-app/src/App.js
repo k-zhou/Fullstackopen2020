@@ -1,30 +1,52 @@
 import React, { useState } from 'react'
 import NameForm from './NameForm'
 
-const NamesList = ({persons}) => {
+const DisplayNames = ({persons}) => {
   return (
-    <ul>
-      {persons.map((p, i) => <li key={p.name}>{p.name}</li>)}
-    </ul>
+    <table>
+      <tbody>
+        {persons.map((p, i) => <tr key={p.name}><td>{p.name}</td><td>{p.number}</td></tr>)}
+      </tbody>
+    </table>
+  )
+}
+
+const FilterForm = ({peopleFilter, setPeopleFilter}) => {
+  return (
+    <div>
+      filter names:
+      <form>
+        <input
+          value    = {peopleFilter}
+          onChange = {(event) => {setPeopleFilter(event.target.value); }}
+        />
+      </form>
+    </div>
   )
 }
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
-  const [ newName, setNewName ] = useState('')
+  const [peopleFilter, setPeopleFilter] = useState('')
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <NameForm persons={persons}
-                setPersons={setPersons}
-                newName={newName}
-                setNewName={setNewName} />
+      <FilterForm peopleFilter        ={peopleFilter}
+                  setPeopleFilter     ={setPeopleFilter}
+      />
+      <h3>Add a new entry:</h3>
+      <NameForm persons     ={persons}
+                setPersons  ={setPersons}
+      />
 
       <h2>Numbers</h2>
-      <NamesList persons={persons}/>
+      <DisplayNames persons={persons.filter(p => p.name.toLowerCase().includes(peopleFilter.toLowerCase()))}/>
 
     </div>
   )
