@@ -1,29 +1,9 @@
 import React, { useState } from 'react'
+import FilterForm from './FilterForm'
 import NameForm from './NameForm'
+import DisplayNames from './DisplayNames'
 
-const DisplayNames = ({persons}) => {
-  return (
-    <table>
-      <tbody>
-        {persons.map((p, i) => <tr key={p.name}><td>{p.name}</td><td>{p.number}</td></tr>)}
-      </tbody>
-    </table>
-  )
-}
 
-const FilterForm = ({peopleFilter, setPeopleFilter}) => {
-  return (
-    <div>
-      filter names:
-      <form>
-        <input
-          value    = {peopleFilter}
-          onChange = {(event) => {setPeopleFilter(event.target.value); }}
-        />
-      </form>
-    </div>
-  )
-}
 
 const App = () => {
   const [persons, setPersons] = useState([
