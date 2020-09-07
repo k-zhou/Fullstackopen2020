@@ -1,67 +1,34 @@
-import React from 'react';
-// import ReactDOM from 'react-dom';
-import Course from './Course';
+import React, { useState } from 'react'
+import NameForm from './NameForm'
 
-const Curriculum = ({courses}) => {
+const NamesList = ({persons}) => {
   return (
-    <div>
-      <h1>Web development curriculum</h1>
-      {courses.map( one => <Course course={one} key={one.id}/>)}
-    </div>
+    <ul>
+      {persons.map((p, i) => <li key={p.name}>{p.name}</li>)}
+    </ul>
   )
 }
 
 const App = () => {
-  const courses = [
-    {
-      name: 'Half Stack application development',
-      id: 1,
-      parts: [
-        {
-          name: 'Fundamentals of React',
-          exercises: 10,
-          id: 1
-        },
-        {
-          name: 'Using props to pass data',
-          exercises: 7,
-          id: 2
-        },
-        {
-          name: 'State of a component',
-          exercises: 14,
-          id: 3
-        },
-        {
-          name: 'Redux',
-          exercises: 11,
-          id: 4
-        }
-      ]
-    },
-    {
-      name: 'Node.js',
-      id: 2,
-      parts: [
-        {
-          name: 'Routing',
-          exercises: 3,
-          id: 1
-        },
-        {
-          name: 'Middlewares',
-          exercises: 7,
-          id: 2
-        }
-      ]
-    }
-  ]
+  const [ persons, setPersons] = useState([
+    { name: 'Arto Hellas' }
+  ])
+  const [ newName, setNewName ] = useState('')
 
   return (
     <div>
-      <Curriculum courses={courses} />
+      <h2>Phonebook</h2>
+      <NameForm persons={persons}
+                setPersons={setPersons}
+                newName={newName}
+                setNewName={setNewName} />
+
+      <h2>Numbers</h2>
+      <NamesList persons={persons}/>
+
     </div>
   )
+// <button onClick={() => console.log('here is the list of names: ', persons)}>debug</button>
 }
 
 export default App
