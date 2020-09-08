@@ -1,13 +1,13 @@
 import React from 'react'
 
-const FilterForm = ({peopleFilter, setPeopleFilter}) => {
+const FilterForm = ({filter, setFilter}) => {
   return (
     <div>
-      filter names:
+      find countries
       <form>
         <input
-          value    = {peopleFilter}
-          onChange = {(event) => {setPeopleFilter(event.target.value); }}
+          value    = {filter}
+          onChange = {(event) => {setFilter(event.target.value); }}
         />
       </form>
     </div>

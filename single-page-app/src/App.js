@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import FilterForm from './FilterForm'
-import NameForm from './NameForm'
-import DisplayNames from './DisplayNames'
+import ShowCountryData from './ShowCountryData'
 /**/
 const App = () => {
 
-  const [persons, setPersons] = useState([])
-  const [peopleFilter, setPeopleFilter] = useState('')
+  const [rdata, setRdata] = useState([])
+  const [dataFilter, setDataFilter] = useState('')
+
   useEffect( () => {
     axios
-      .get('http://localhost:3001/persons')
+      .get('https://restcountries.eu/rest/v2/all')
       .then( resp => {
-          setPersons(resp.data)
+          setRdata(resp.data)
       })
   }, [])  // note to self: remember to add the empty array, else it will endlessly call GET
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <FilterForm peopleFilter        ={peopleFilter}
-                  setPeopleFilter     ={setPeopleFilter}
+      <h2>Country facts</h2>
+      <FilterForm filter   ={dataFilter}
+                  setFilter={setDataFilter}
       />
-      <h3>Add a new entry:</h3>
-      <NameForm persons     ={persons}
-                setPersons  ={setPersons}
+      <ShowCountryData  dat       ={rdata}
+                        dataFilter={dataFilter}
+
       />
-
-      <h2>Numbers</h2>
-      <DisplayNames persons={persons.filter(p => p.name.toLowerCase().includes(peopleFilter.toLowerCase()))}/>
-
     </div>
   )
+  // <h3>Add a new entry:</h3>
+  // <NameForm persons     ={persons}
+  //           setPersons  ={setPersons}
+  // />
+  // <h2>Numbers</h2>
+  // <DisplayNames persons={persons.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()))}/>
+
 // <button onClick={() => console.log('here is the list of names: ', persons)}>debug</button>
 }
 
