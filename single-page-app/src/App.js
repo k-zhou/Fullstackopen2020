@@ -22,8 +22,9 @@ const App = () => {
       <FilterForm filter   ={dataFilter}
                   setFilter={setDataFilter}
       />
-      <ShowCountryData  dat       ={rdata}
-                        dataFilter={dataFilter}
+      <ShowCountryData  dat          ={rdata}
+                        dataFilter   ={dataFilter}
+                        setDataFilter={setDataFilter}
 
       />
     </div>

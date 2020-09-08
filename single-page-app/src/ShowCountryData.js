@@ -14,12 +14,21 @@ const ShowOneCountryDetails = ({dat}) => {
   )
 }
 
-const ShowOneCountry = ({dat}) => {
-  return (<li>{dat.name}</li>)
+const ShowOneCountry = ({dat, setDataFilter}) => {
+  return (
+    <tr>
+      <td>{dat.name}</td>
+      <td>
+        <button onClick={() => setDataFilter(dat.name)}>
+          show
+        </button>
+      </td>
+    </tr>
+  )
 }
 
 //  main
-const ShowCountryData = ({dat, dataFilter}) => {
+const ShowCountryData = ({dat, dataFilter, setDataFilter}) => {
   // console.log("received dat is", dat)
   const toShow = dat.filter(p => p.name.toLowerCase().includes(dataFilter.toLowerCase()) )
   if (toShow.length === 0)
@@ -42,10 +51,18 @@ const ShowCountryData = ({dat, dataFilter}) => {
     )
   else
     return (
-      <ul>
-        {toShow.map(c => <ShowOneCountry dat={c} key={c.name} />)}
-      </ul>
+      <table>
+        <tbody>
+            {toShow.map(c => <ShowOneCountry dat={c} key={c.name} setDataFilter={setDataFilter} />)}
+        </tbody>
+      </table>
     )
 }
-
+/*
+Idea: you can do this:
+const var1 = useState()
+it renders var1 an array, where var1[0] is the getter and var1[1] is the setter
+Idea: pass getters and setters around using arrays;
+  although you might have unwanted setters or getters passed around.
+*/
 export default ShowCountryData
