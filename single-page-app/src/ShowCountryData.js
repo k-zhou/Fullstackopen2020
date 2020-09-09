@@ -1,15 +1,24 @@
 import React from 'react'
 // import {useState, useEffect} from 'react'
 // import axios from 'axios'
+import WeatherCall from './WeatherCall'
+import TableCreator from './TableCreator'
+
+const API_KEY = process.env.REACT_APP_API_KEY
 
 const ShowOneCountryDetails = ({dat}) => {
+  const output = [
+    ['capital:',    dat.capital],
+    ['population:', dat.population],
+    ['languages:', (<ul>{dat.languages.map((l, i) => <li key={i}>{l.name}</li> )}</ul>)]
+  ]
   return (
     <div>
       <h1>{dat.name}</h1>
-      capital: {dat.capital}<br/>
-      population: {dat.population}<br/>
-      languages: <ul>{dat.languages.map((l, i) => <li key={i}>{l.name}</li> )}</ul><br/>
+      <TableCreator rows={output} />
+
       <img src={dat.flag} alt={"Flag of "+ dat.name} height='160' />
+      <WeatherCall cityname={dat.capital} apikey={API_KEY}/>
     </div>
   )
 }
@@ -30,7 +39,13 @@ const ShowOneCountry = ({dat, setDataFilter}) => {
 //  main
 const ShowCountryData = ({dat, dataFilter, setDataFilter}) => {
   // console.log("received dat is", dat)
-  const toShow = dat.filter(p => p.name.toLowerCase().includes(dataFilter.toLowerCase()) )
+  /* The first line allows you to pick out single countries,
+    whose names are part of different countries, e.g Sudan and South Sudan */
+  const toShow =
+  dat.some(n => n.name === dataFilter) ?
+     dat.filter(p => p.name === dataFilter)
+  :
+    dat.filter(p => p.name.toLowerCase().includes(dataFilter.toLowerCase()) )
   if (toShow.length === 0)
     return (
       <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import FilterForm from './FilterForm'
 import ShowCountryData from './ShowCountryData'
+
 /**/
 const App = () => {
 
@@ -14,7 +15,10 @@ const App = () => {
       .then( resp => {
           setRdata(resp.data)
       })
+    // const jsonfile = require('./example-all-countries.json') //DEBUG
+    // setRdata(jsonfile)  //DEBUG
   }, [])  // note to self: remember to add the empty array, else it will endlessly call GET
+
 
   return (
     <div>
