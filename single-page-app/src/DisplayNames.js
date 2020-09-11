@@ -1,13 +1,15 @@
 import React from 'react'
+import TableCreator from './TableCreator'
 
 const DisplayNames = ({persons}) => {
+  let output = []
+  persons.map( (p, i) => output = output.concat( [p.name, p.number, <button onClick={() => console.log(`clicked on number ${i}`) }>{i}</button> ] ) )
   return (
-    <table>
-      <tbody>
-        {persons.map((p, i) => <tr key={p.name}><td>{p.name}</td><td>{p.number}</td></tr>)}
-      </tbody>
-    </table>
+    <div>
+
+    </div>
   )
+  // <TableCreator rows={output}/>
 }
 
 export default DisplayNames
