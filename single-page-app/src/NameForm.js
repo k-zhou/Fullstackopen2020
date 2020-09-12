@@ -10,11 +10,16 @@ const NameForm = ({persons, setPersons, url}) => {
   /* TODO? this should be moved to noteServices.addNote*/
   const handleSubmit = (event) => {
     event.preventDefault()
+    // Check for duplicates
     // if (persons.every(p => (p.number !== newNum) && (p.name !== newName) ) && (newName !== '') )
     const checkname = persons.find(p => (p.name === newName))
     const checknum  = persons.find(p => (p.number === newNum))
-    if (checkname !== undefined)
-      window.alert(`${checkname.name} (${checkname.number}) already exists in the phonebook!`)
+    if (checkname !== undefined) {
+      if (window.confirm(`${checkname.name} already exists. Update phone number for them?`)) {
+        noteService.editNote(url, checkname.id, {name: checkname.name, number: newNum}, setPersons, persons)
+      }
+    }
+      // window.alert(`${checkname.name} (${checkname.number}) already exists in the phonebook!`)
     else if (checknum !== undefined)
       window.alert(`${checknum.name} (${checknum.number}) already exists in the phonebook!`)
     else if (newName === '' || newNum === '')
@@ -32,7 +37,7 @@ const NameForm = ({persons, setPersons, url}) => {
     }
 
   }
-
+  // Construct part of the displayed content
   const output =
     [
       [

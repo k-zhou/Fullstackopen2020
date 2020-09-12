@@ -34,9 +34,21 @@ const deleteNote = (url, id, setter, getter) => {
       console.log(`error deleting note: ${error}`)
     })
 }
+const editNote = (url, id, newNote, setter, getter) => {
+  axios
+    .put(`${url}/${id}`, newNote )
+    .then( resp => {
+      console.log(`edited note`)
+      setter(getter.map(n => n.id !== id ? n : newNote ))
+    })
+    .catch( error => {
+      console.log(`error editing note: ${error}`)
+    })
+}
 
 export default {
   getNotes,
   addNote,
-  deleteNote
+  deleteNote,
+  editNote
 }
