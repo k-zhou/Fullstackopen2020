@@ -2,10 +2,10 @@
 import axios from 'axios'
 
 const getNotes = (url, setter) => {
+
   axios
     .get(url)
     .then( resp => {
-      // console.log(`response received, data: ${resp.data}`)
       setter(resp.data)
     })
     .catch( error =>
@@ -13,37 +13,43 @@ const getNotes = (url, setter) => {
     )
 }
 const addNote = (url, newNote, setter, getter) => {
-  axios
-    .post(url, newNote)
-    .then( resp => {
-      console.log(`added note`)
-      setter(getter.concat(resp.data))
-    })
-    .catch( error => {
-      console.log(`error adding note: ${error}`)
-    })
+  return new Promise( (resolve, reject) => {
+    axios
+      .post(url, newNote)
+      .then( resp => {
+        setter(getter.concat(resp.data))
+        resolve('Successfully added note')
+      })
+      .catch( error => {
+        reject(`${error}`)
+      })
+  })
 }
 const deleteNote = (url, id, setter, getter) => {
-  axios
-    .delete(`${url}/${id}`)
-    .then( resp => {
-      console.log(`deleted note`)
-      setter(getter.filter(n => n.id !== id))
-    })
-    .catch( error => {
-      console.log(`error deleting note: ${error}`)
-    })
+  return new Promise( (resolve, reject) => {
+    axios
+      .delete(`${url}/${id}`)
+      .then( resp => {
+        setter(getter.filter(n => n.id !== id))
+        resolve('Successfully deleted note')
+      })
+      .catch( error => {
+        reject(`${error}`)
+      })
+  })
 }
 const editNote = (url, id, newNote, setter, getter) => {
-  axios
-    .put(`${url}/${id}`, newNote )
-    .then( resp => {
-      console.log(`edited note`)
-      setter(getter.map(n => n.id !== id ? n : newNote ))
-    })
-    .catch( error => {
-      console.log(`error editing note: ${error}`)
-    })
+  return new Promise( (resolve, reject) => {
+    axios
+      .put(`${url}/${id}`, newNote )
+      .then( resp => {
+        setter(getter.map(n => n.id !== id ? n : newNote ))
+        resolve('Successfully edited note')
+      })
+      .catch( error => {
+        reject(`${error}`)
+      })
+  })
 }
 
 export default {

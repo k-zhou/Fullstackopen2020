@@ -5,7 +5,7 @@ import noteService from './Services'
 // const handleRemoval = (url, id, persons, setPersons) => {
 //
 // }
-const DisplayNames = ({persons, setPersons, filter, url}) => {
+const DisplayNames = ({persons, setPersons, filter, url, notify}) => {
 
   const output = new Array(persons.length)
   persons
@@ -15,8 +15,12 @@ const DisplayNames = ({persons, setPersons, filter, url}) => {
         p.name,
         p.number,
         <button onClick={ () => {
-          if (window.confirm(`Delete ${p.name}?`))
-            noteService.deleteNote(url, p.id, setPersons, persons)
+          if (window.confirm(`Delete ${p.name}?`)) {
+            noteService
+              .deleteNote(url, p.id, setPersons, persons)
+              .then( resp => notify(`Successfully deleted ${p.name}.`, 5000, 'notification'))
+              .catch( error => notify(`Cannot delete ${p.name} - ${error}`, 10000, 'error'))
+          }
         }} >
           remove
         </button>
