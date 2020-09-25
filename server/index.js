@@ -38,6 +38,10 @@ app.get('/', (req, res) => {
 })
 
 // People pages
+app.get('/api/persons/', (req, res) => {
+  res.json(people_h_)
+})
+
 app.get('/api/persons/:id', (req, res) => {
   const id_ = Number(req.params.id)
   // console.log("id is", id_ ) // DEBUG
