@@ -9,7 +9,7 @@ const express = require('express')
 
 // Init
 const app = express()
-let people_h_ = [
+let orig_data_h_ = [
   {
     id: 1,
     name: "Arto Hellas",
@@ -31,6 +31,7 @@ let people_h_ = [
     number: "39-23-6423122"
   }
 ]
+let people_h_ = orig_data_h_.slice()
 
 // Landing page
 app.get('/', (req, res) => {
@@ -46,7 +47,7 @@ app.get('/api/persons/:id', (req, res) => {
   const id_ = Number(req.params.id)
   // console.log("id is", id_ ) // DEBUG
   // people_h_.map(p => console.log(p.id, p.name, p.number)) // DEBUG
-  const found = people_h_.find(n => n.id === id_ )
+  const found = people_h_.find(p => p.id === id_ )
   if (found)
     res.json(found)
   else
@@ -61,6 +62,17 @@ app.get('/info', (req, res) => {
     <p>${new Date()}</p>
   `
   res.send(output)
+})
+
+//
+app.delete('/api/persons/:id', (req, res) => {
+  const id_ = Number(req.params.id)
+  if (people_h_.find(p => p.id === id_)) {
+    people_h_ = people_h_.filter( p => p.id !== id_ )
+    res.status(204).end()
+  } else {
+    res.status(404).end()
+  }
 })
 // Run server
 const port = 3001
