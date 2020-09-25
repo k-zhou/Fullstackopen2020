@@ -49,6 +49,15 @@ app.get('/api/persons/:id', (req, res) => {
     res.status(404).end('<h1>404 Person not found</h1>')
 })
 
+//
+app.get('/info', (req, res) => {
+  const output = `
+    <h1>Info</h1>
+    <p>There are currently ${people_h_.length} people in the phonebook.<p>
+    <p>${new Date()}</p>
+  `
+  res.send(output)
+})
 // Run server
 const port = 3001
 app.listen(port)
