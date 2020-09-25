@@ -1,0 +1,17 @@
+/*
+    What the hell is this JSON file?
+    Okay. From what I've figured out, the initialisation of useState()
+    requires you to precisely define the datatype that is going to be held within it:
+    '' for strings
+    {} for objects
+    [] for arrays
+    It also seems that whatever type is nested within the top layer also matters.
+    In other words, nested types also need to be carefully defined during useState() init.
+    In this case, the weather JSON file returned has a top layer of OBJECT, while its
+    second layer is mixed. All but one attribute has the type OBJECT, while the
+    attribute 'weather' has the type ARRAY.
+    THIS seems to be causing ALL the problems with ReactJS.
+    The workaround here is... let's see;
+    WIP:
+    to pick out all but one of the attributes with a useState({})
+  */
