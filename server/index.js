@@ -1,15 +1,16 @@
 // console.log('Hello World! This is a simple server.')
 const http = require('http')
 const express = require('express')
-// this is basic stuff without Express
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { 'Content-Type': 'text/plain' })
-//   response.end('Hello World! This is a simple server.')
-// })
+const morgan  = require('morgan')
+morgan.token('body', (req, res) => (req.headers['content-type'] === "application/json" ? JSON.stringify(req.body) : req.body))
+morgan.token('type', (req, res) => (req.headers['content-type']))
 
 // Init
 const app = express()
 app.use(express.json())
+// app.use(morgan('tiny'))  // simple logging
+app.use(morgan(':method :url - status :status length :res[content-length] response time :response-time ms type: :type \n:body'))
+
 let orig_data_h_ = [
   {
     id: 1,
@@ -32,7 +33,7 @@ let orig_data_h_ = [
     number: "39-23-6423122"
   }
 ]
-let people_ = orig_data_h_.slice()
+let people_ = orig_data_h_.slice()  // is a copy
 
 // functions
 const getRandomInt = (max) => {
@@ -79,7 +80,7 @@ app.post('/api/persons/', (req, res) => {
     new_id_     = getRandomInt(MAX_RANDOM)
   
   let new_note_ = req.body
-  console.log("Received new POST request:", req.headers["content-type"], "- assigned", new_id_, "\n", new_note_) // DEBUG
+  // console.log("Received new POST request:", req.headers["content-type"], "- assigned", new_id_, "\n", new_note_) // DEBUG
   if (req.headers["content-type"] === "application/json") {
     // Data checks
     if (!new_note_.name) {
@@ -119,3 +120,10 @@ app.delete('/api/persons/:id', (req, res) => {
 const port = 3001
 app.listen(port)
 console.log(`Server running on port ${port}`)
+
+
+// this is basic stuff without Express
+// const app = http.createServer((request, response) => {
+//   response.writeHead(200, { 'Content-Type': 'text/plain' })
+//   response.end('Hello World! This is a simple server.')
+// })
